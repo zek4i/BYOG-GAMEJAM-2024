@@ -13,14 +13,13 @@ public class PlayerInventory : MonoBehaviour
     public int gemsToActivateSpeedBoost = 5; // Number of gems required to activate speed boost
     public float boostMultiplier = 2.5f; // Speed boost multiplier
     public float boostDuration = 5f; // Duration of the speed boost
+    public int totalGemsCollected = 0; // New variable to track total gems collected
 
     private FirstPersonController playerController;
-
-    public SpeedBuffText playerUI; // Reference to PlayerUI
     public int gemsToSlowEnemies = 15; // Number of gems required to slow enemies
     [SerializeField] public float enemySlowMultiplier = 0.5f; // Multiplier to slow enemies
 
-
+    public SpeedBuffText playerUI; // Reference to PlayerUI
     public EnemySlowText enemySlowUI;
 
     public AudioSource gemPickupSound; // Reference to the AudioSource for the gem pickup sound
@@ -46,8 +45,9 @@ public class PlayerInventory : MonoBehaviour
     public void GemsCollected()
     {
         gemCount++;
+        totalGemsCollected++; // Increment the total gems collected
         enemySlowGemCount++; // Increment the slow gem count
-        Debug.Log("Gems Collected: " + gemCount);
+        Debug.Log("Total Gems Collected: " + totalGemsCollected);
 
         // Check if the gem count is equal to or exceeds the required number to activate the speed boost
         if (gemCount >= gemsToActivateSpeedBoost)
@@ -65,6 +65,8 @@ public class PlayerInventory : MonoBehaviour
             SlowDownEnemies(); // Call the slow down method
             enemySlowGemCount = 0; // Reset the slow gem count after applying effect
         }
+
+
 
         NumberOfGems++; // If this property is used somewhere else
         OnGemsCollected.Invoke(this);
