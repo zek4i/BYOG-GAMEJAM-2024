@@ -11,63 +11,87 @@ public class EnemyAI : MonoBehaviour
 
     private NavMeshAgent navMeshAgent;
     private bool isChasing = false;
-
+    private Animator animator;
+    private float originalSpeed;
     void Start()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>(); // Ensure you have a NavMeshAgent component attached
+        animator = GetComponent<Animator>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        originalSpeed = navMeshAgent.speed; // Store the original speed
     }
 
     void Update()
     {
-        float distanceToPlayer = Vector3.Distance(transform.position, player.position); // Calculate distance between player and enemy
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
 
         if (distanceToPlayer <= detectionRadius && !IsPlayerLookingAtEnemy())
         {
-            StartChasing(); // Start chasing the player
+            StartChasing();
         }
         else if (isChasing && distanceToPlayer > stoppingDistance)
         {
-            ContinueChasing(); // Keep chasing the player
+            ContinueChasing();
         }
         else if (isChasing && distanceToPlayer <= stoppingDistance)
         {
-            StopChasing(); // Stop when too close to the player
+            StopChasing();
         }
 
         if (IsPlayerLookingAtEnemy())
         {
-            StopChasing(); // Stop chasing if the player is looking at the enemy
+            StopChasing();
         }
     }
 
+    public void SlowDown(float slowMultiplier)
+    {
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.speed /= slowMultiplier; // Slow down the enemy
+            StartCoroutine(ResetSpeedAfterDelay(3f)); // Reset speed after 3 seconds
+            Debug.Log("enemies slowed for 3 seconds boi");
+           
+        }
+        else
+        {
+            Debug.LogWarning("NavMeshAgent not found on enemy: " + gameObject.name);
+        }
+    }
+    private IEnumerator ResetSpeedAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay); // Wait for the specified duration
+        navMeshAgent.speed = originalSpeed; // Reset to original speed
+    }
     void StartChasing()
     {
+        animator.SetBool("IsMoving", true);
         isChasing = true;
         navMeshAgent.isStopped = false;
-        navMeshAgent.SetDestination(player.position); // Set the player's position as the destination
+        navMeshAgent.SetDestination(player.position);
     }
 
     void ContinueChasing()
     {
-        navMeshAgent.SetDestination(player.position); // Continuously update the destination
+        animator.SetBool("IsMoving", true);
+        navMeshAgent.SetDestination(player.position);
     }
 
     void StopChasing()
     {
+        animator.SetBool("IsMoving", false);
         isChasing = false;
-        navMeshAgent.isStopped = true; // Stop the agent's movement
+        navMeshAgent.isStopped = true;
     }
 
     bool IsPlayerLookingAtEnemy()
     {
-        Vector3 directionToEnemy = (transform.position - player.position).normalized; // Calculate the direction from player to enemy
-        float dotProduct = Vector3.Dot(player.forward, directionToEnemy); // Check if the player is looking at the enemy
-        return dotProduct > 0.5f; // Returns true if the player is facing the enemy
+        Vector3 directionToEnemy = (transform.position - player.position).normalized;
+        float dotProduct = Vector3.Dot(player.forward, directionToEnemy);
+        return dotProduct > 0.5f;
     }
 
     void OnDrawGizmosSelected()
     {
-        // Display detection radius when the object is selected
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }

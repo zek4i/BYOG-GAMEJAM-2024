@@ -10,7 +10,10 @@ public class Gems : MonoBehaviour
         if(playerInventory != null )
         {
             playerInventory.GemsCollected();
+            playerInventory.gemPickupSound.Play(); // Play the gem pickup sound
             gameObject.SetActive(false);
         }
+
     }
+
 }
