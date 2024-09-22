@@ -28,6 +28,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
 
+        [SerializeField] private float mouseSensitivityX = 100f; // Horizontal sensitivity
+        [SerializeField] private float mouseSensitivityY = 100f; // Vertical sensitivity
         private float defaultWalkSpeed;
         private float defaultRunSpeed;
         private Camera m_Camera;
@@ -72,7 +74,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
       
         // Update is called once per frame
         private void Update()
-        {   
+        {
+            float mouseX = Input.GetAxis("Mouse X") * mouseSensitivityX * Time.deltaTime;
+            float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivityY * Time.deltaTime;
+
+            transform.Rotate(Vector3.up * mouseX);  // Rotate player horizontally
+            m_Camera.transform.Rotate(Vector3.left * mouseY); // Rotate camera vertically
             RotateView();
 
 

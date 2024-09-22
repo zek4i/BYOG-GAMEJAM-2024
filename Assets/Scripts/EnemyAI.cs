@@ -48,16 +48,7 @@ public class EnemyAI : MonoBehaviour
         }
       
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player")) // Assuming your player has the tag "Player"
-        {
-            // Call the method to change to the Game Over scene
-            SceneManager.LoadScene("GameOverScene");
-        }
-
-    }
-
+    
         public void SlowDown(float slowMultiplier)
     {
         if (navMeshAgent != null)
