@@ -114,10 +114,11 @@ GameObject:
   - component: {fileID: 8482928601472145819}
   - component: {fileID: 5862950798367462601}
   - component: {fileID: 2745613317829314269}
-  - component: {fileID: 3235614845858105065}
   - component: {fileID: 8060128549966292020}
   - component: {fileID: 2110670850086461615}
   - component: {fileID: 1054113328895329186}
+  - component: {fileID: 5891562750481231736}
+  - component: {fileID: 6647995297806974013}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -194,8 +195,8 @@ MonoBehaviour:
     MinimumX: -90
     MaximumX: 90
     smooth: 0
-    smoothTime: 5
-    lockCursor: 1
+    smoothTime: 3
+    lockCursor: 0
   m_UseFovKick: 1
   m_FovKick:
     Camera: {fileID: 0}
@@ -227,10 +228,10 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  m_UseHeadBob: 1
+  m_UseHeadBob: 0
   m_HeadBob:
-    HorizontalBobRange: 0.1
-    VerticalBobRange: 0.1
+    HorizontalBobRange: 0
+    VerticalBobRange: 0
     Bobcurve:
       serializedVersion: 2
       m_Curve:
@@ -416,27 +417,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!65 &3235614845858105065
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8067698356350589251}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1.76, y: 2.42, z: 1.31}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8060128549966292020
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -453,9 +433,11 @@ MonoBehaviour:
   gemsToActivateSpeedBoost: 5
   boostMultiplier: 1.5
   boostDuration: 5
-  playerUI: {fileID: 2110670850086461615}
+  totalGemsCollected: 0
   gemsToSlowEnemies: 15
   enemySlowMultiplier: 5
+  playerUI: {fileID: 2110670850086461615}
+  enemySlowUI: {fileID: 5891562750481231736}
   gemPickupSound: {fileID: 1054113328895329186}
   OnGemsCollected:
     m_PersistentCalls:
@@ -506,7 +488,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.0022955
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
@@ -582,6 +564,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5891562750481231736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8067698356350589251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4a9b9cd8c7845946bb548d46e4143dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySlowText: {fileID: 0}
+--- !u!136 &6647995297806974013
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8067698356350589251}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.81
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &2322087385075452559
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
@@ -8,6 +9,9 @@ public class EnemyAI : MonoBehaviour
     public Transform player;
     [SerializeField] private float detectionRadius = 10f;
     [SerializeField] private float stoppingDistance = 2f;
+
+    public float detectionRange = 2f;
+    private DeathHandler deathHandler;
 
     private NavMeshAgent navMeshAgent;
     private bool isChasing = false;
@@ -18,6 +22,7 @@ public class EnemyAI : MonoBehaviour
         animator = GetComponent<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         originalSpeed = navMeshAgent.speed; // Store the original speed
+        deathHandler = player.GetComponent<DeathHandler>();
     }
 
     void Update()
@@ -41,9 +46,19 @@ public class EnemyAI : MonoBehaviour
         {
             StopChasing();
         }
+      
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player")) // Assuming your player has the tag "Player"
+        {
+            // Call the method to change to the Game Over scene
+            SceneManager.LoadScene("GameOverScene");
+        }
+
     }
 
-    public void SlowDown(float slowMultiplier)
+        public void SlowDown(float slowMultiplier)
     {
         if (navMeshAgent != null)
         {

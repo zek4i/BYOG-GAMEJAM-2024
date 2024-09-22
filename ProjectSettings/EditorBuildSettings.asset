@@ -4,5 +4,15 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/SampleScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/GameOverScene.unity
+    guid: b02a6729997057f4d90059d843274e6b
+  - enabled: 1
+    path: Assets/Scenes/YouHaveEscaped.unity
+    guid: f3e065c8a81deb145af0e76333f5ec37
   m_configObjects: {}
+  m_UseUCBPForAssetBundles: 0

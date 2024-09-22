@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityStandardAssets.Characters.FirstPerson;
+using TMPro;
 
 
 
@@ -14,6 +15,7 @@ public class PlayerInventory : MonoBehaviour
     public float boostMultiplier = 2.5f; // Speed boost multiplier
     public float boostDuration = 5f; // Duration of the speed boost
     public int totalGemsCollected = 0; // New variable to track total gems collected
+    public TextMeshProUGUI messageTextPro;
 
     private FirstPersonController playerController;
     public int gemsToSlowEnemies = 15; // Number of gems required to slow enemies
@@ -48,6 +50,10 @@ public class PlayerInventory : MonoBehaviour
         totalGemsCollected++; // Increment the total gems collected
         enemySlowGemCount++; // Increment the slow gem count
         Debug.Log("Total Gems Collected: " + totalGemsCollected);
+        if (totalGemsCollected == 30)
+        {
+            StartCoroutine(ShowMessage("The exit door is unlocked!", 3f));
+        }
 
         // Check if the gem count is equal to or exceeds the required number to activate the speed boost
         if (gemCount >= gemsToActivateSpeedBoost)
@@ -72,7 +78,16 @@ public class PlayerInventory : MonoBehaviour
         OnGemsCollected.Invoke(this);
     }
 
-    private void SlowDownEnemies()
+    private IEnumerator ShowMessage(string message, float duration)
+    {
+        if (messageTextPro != null)
+        {
+            messageTextPro.text = message; // Display the message
+            yield return new WaitForSeconds(duration); // Wait for the specified duration
+            messageTextPro.text = ""; // Clear the message
+        }
+    }
+        private void SlowDownEnemies()
     {
         EnemyAI[] enemies = FindObjectsOfType<EnemyAI>(); // Find all enemies in the scene
 

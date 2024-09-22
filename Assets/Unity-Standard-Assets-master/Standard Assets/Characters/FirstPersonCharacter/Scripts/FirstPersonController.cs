@@ -44,12 +44,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
         private Animator animator;
-
         // Use this for initialization
+
         private void Start()
         {
             defaultWalkSpeed = m_WalkSpeed;
             defaultRunSpeed = m_RunSpeed;
+
+
 
             m_CharacterController = GetComponent<CharacterController>();
             m_Camera = Camera.main;
@@ -65,10 +67,14 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
 
+     
+
+      
         // Update is called once per frame
         private void Update()
-        {
+        {   
             RotateView();
+
 
             if (!m_PreviouslyGrounded && m_CharacterController.isGrounded)
             {
@@ -85,10 +91,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
 
-
         }
-
-
+      
+        
 
 
         private void PlayLandingSound()
@@ -278,6 +283,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void RotateView()
         {
+          
             m_MouseLook.LookRotation(transform, m_Camera.transform);
         }
 
